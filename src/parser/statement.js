@@ -532,11 +532,11 @@ pp.parseFor = function (node, init) {
 pp.parseForIn = function (node, init, forAwait) {
   const type = this.match(tt._in) ? "ForInStatement" : "ForOfStatement";
   if (forAwait) {
-    node.await = true;
     this.eatContextual("of");
   } else {
     this.next();
   }
+  node.await = !!forAwait;
   node.left = init;
   node.right = this.parseExpression();
   this.expect(tt.parenR);
